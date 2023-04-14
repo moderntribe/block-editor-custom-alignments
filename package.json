@@ -1,0 +1,56 @@
+{
+  "name": "gutenberg-custom-alignments",
+  "version": "1.0.0",
+  "description": "Allows developers to add custom alignments to `theme.json` for use in the block editor.",
+  "author": "Modern Tribe <admin@tri.be>",
+  "license": "GPL-2.0-or-later",
+  "keywords": [],
+  "homepage": "https://github.com/moderntribe/gutenberg-custom-alignments#readme",
+  "repository": "https://github.com/moderntribe/gutenberg-custom-alignments",
+  "bugs": {
+    "email": "admin@tri.be"
+  },
+  "browserslist": [
+    "last 2 versions",
+    "safari >= 15",
+    "ios >= 15",
+    "android >= 8.0",
+    "not op_mini all",
+    "not dead"
+  ],
+  "directories": {
+    "admin": "admin/",
+    "public": "public/"
+  },
+  "engines": {
+    "node": "16.13.1"
+  },
+  "devDependencies": {
+    "@csstools/postcss-global-data": "^1.0.3",
+    "@wordpress/scripts": "^25.4.0",
+    "cssnano": "^5.1.15",
+    "fast-glob": "^3.2.12",
+    "lefthook": "^1.1",
+    "postcss-import": "^15.1.0",
+    "postcss-preset-env": "^8.0.1",
+    "webpack-remove-empty-scripts": "^1.0"
+  },
+  "scripts": {
+    "dist": "wp-scripts build",
+    "dev": "wp-scripts start",
+    "format": "wp-scripts format ./public",
+    "lint": "npm run format && npm run lint:js:fix && npm run lint:css:fix",
+    "lint:css": "wp-scripts lint-style \"./@(admin|public)/**/*.pcss\"",
+    "lint:css:fix": "wp-scripts lint-style \"./@(admin|public)/**/*.pcss\" --fix",
+    "lint:js": "wp-scripts lint-js \"./@(admin|public)/**/*.js\"",
+    "lint:js:fix": "wp-scripts lint-js \"./@(admin|public)/**/*.js\" --fix",
+    "lint:configs": "wp-scripts lint-js \"./*.js\"",
+    "lint:configs:fix": "wp-scripts lint-js \"./*.js\" --fix",
+    "lint:pkg-json": "wp-scripts lint-pkg-json",
+    "packages-update": "wp-scripts packages-update",
+    "check-engines": "wp-scripts check-engines",
+    "check-licenses": "wp-scripts check-licenses",
+    "server-lint": "npm run lint:js && npm run lint:css",
+    "server-dist": "npm run dist"
+  }
+}
