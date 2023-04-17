@@ -156,7 +156,6 @@
 	const customBlockAlignmentControls = createHigherOrderComponent( ( BlockEdit ) => {
 		return ( props ) => {
 			const blockName = props.name;
-			const currentAlign = props.attributes.align;
 			const originalEdit = el( BlockEdit, props );
 
 			// check for block align support
@@ -233,8 +232,16 @@
 			}
 
 			// Get the current ToolbarDropdownMenu icon, depending on the selected align
-			let currentIcon = currentAlign ? combinedAlignments.find( alignment => alignment.slug === currentAlign ) : combinedAlignments.find( alignment => alignment.slug === 'none' );
-			currentIcon = blockAlignIcon( currentIcon.icon );
+			let currentAlign = 'none';
+			if ( props?.attributes?.className !== undefined && props.attributes.className.includes('align') ) {
+				currentAlign = props.attributes.className.replace( 'align', '' );
+			}
+
+			let currentIcon = combinedAlignments.find( alignment => alignment.slug === 'none' );
+			if ( currentAlign !== '' ) {
+				currentIcon = combinedAlignments.find( alignment => alignment.slug === currentAlign );
+				currentIcon = blockAlignIcon( currentIcon.icon );
+			}
 
 			/*
 			* Re-Build the block toolbar and edit
