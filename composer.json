@@ -1,0 +1,15 @@
+{
+  "name": "moderntribe/gutenberg-custom-alignments",
+  "description": "Modern Tribe Gutenberg Custom Alignments plugin.",
+  "type": "wordpress-plugin",
+  "license": "GPL-2.0+",
+  "minimum-stability": "dev",
+  "require": {
+      "composer/installers": "^1.0 || ^2.0"
+  },
+  "config": {
+      "allow-plugins": {
+          "composer/installers": true
+      }
+  }
+}
