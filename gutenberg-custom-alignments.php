@@ -15,7 +15,7 @@
  * @wordpress-plugin
  * Plugin Name:       Gutenberg Custom Alignments
  * Plugin URI:        https://https://github.com/moderntribe/gutenberg-custom-alignments
- * Description:       Allows developers to add custom alignments to `theme.json` for use in the block editor. 
+ * Description:       Allows developers to add custom alignments to `theme.json` for use in the block editor.
  * Version:           1.0.0
  * Author:            Modern Tribe
  * Author URI:        https://tri.be
@@ -36,6 +36,11 @@ if ( ! defined( 'WPINC' ) ) {
  * Rename this for your plugin and update it as you release new versions.
  */
 define( 'GUTENBERG_CUSTOM_ALIGNMENTS_VERSION', '1.0.0' );
+
+/**
+ * Define base URL for the plugin for use later
+ */
+define( 'GUTENBERG_CUSTOM_ALIGNMENTS_BASE_URL', trailingslashit( plugin_dir_url( __FILE__ ) ) );
 
 /**
  * The code that runs during plugin activation.

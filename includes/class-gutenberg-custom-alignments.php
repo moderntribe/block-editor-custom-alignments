@@ -58,6 +58,15 @@ class Gutenberg_Custom_Alignments {
 	protected $version;
 
 	/**
+	 * Theme JSON object from the currently activated theme.
+	 *
+	 * @since    1.0.0
+	 * @access   protected
+	 * @var		 object   $theme_json  Theme JSON object from the currently activated theme.
+	 */
+	protected $theme_json;
+
+	/**
 	 * Define the core functionality of the plugin.
 	 *
 	 * Set the plugin name and the plugin version that can be used throughout the plugin.
@@ -73,6 +82,8 @@ class Gutenberg_Custom_Alignments {
 			$this->version = '1.0.0';
 		}
 		$this->plugin_name = 'gutenberg-custom-alignments';
+
+		$this->theme_json = $this->get_theme_json();
 
 		$this->load_dependencies();
 		$this->set_locale();
@@ -152,7 +163,7 @@ class Gutenberg_Custom_Alignments {
 	 */
 	private function define_admin_hooks() {
 
-		$plugin_admin = new Gutenberg_Custom_Alignments_Admin( $this->get_plugin_name(), $this->get_version() );
+		$plugin_admin = new Gutenberg_Custom_Alignments_Admin( $this->get_plugin_name(), $this->get_version(), $this->theme_json );
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
@@ -168,10 +179,10 @@ class Gutenberg_Custom_Alignments {
 	 */
 	private function define_public_hooks() {
 
-		$plugin_public = new Gutenberg_Custom_Alignments_Public( $this->get_plugin_name(), $this->get_version() );
+		$plugin_public = new Gutenberg_Custom_Alignments_Public( $this->get_plugin_name(), $this->get_version(), $this->theme_json );
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
-		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
+		//$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 
 	}
 
@@ -213,6 +224,19 @@ class Gutenberg_Custom_Alignments {
 	 */
 	public function get_version() {
 		return $this->version;
+	}
+
+	/**
+	 * Returns a JSON object for theme.json from the currently activated theme.
+	 *
+	 * @return   bool|object  false if file doesn't exist / json object if it does
+	 */
+	public function get_theme_json() {
+		if ( ! file_exists( trailingslashit( get_stylesheet_directory() ) . 'theme.json' ) ) {
+			return false;
+		}
+
+		return json_decode( file_get_contents( trailingslashit( get_stylesheet_directory_uri() ) . 'theme.json' ) );
 	}
 
 }

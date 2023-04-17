@@ -41,16 +41,26 @@ class Gutenberg_Custom_Alignments_Public {
 	private $version;
 
 	/**
+	 * Data from theme.json of the activated theme.
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 * @var      object    $theme_json    Data from theme.json of the activated theme.
+	 */
+	private $theme_json;
+
+	/**
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    1.0.0
 	 * @param      string    $plugin_name       The name of the plugin.
 	 * @param      string    $version    The version of this plugin.
 	 */
-	public function __construct( $plugin_name, $version ) {
+	public function __construct( $plugin_name, $version, $theme_json ) {
 
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
+		$this->theme_json = $theme_json;
 
 	}
 
@@ -61,42 +71,21 @@ class Gutenberg_Custom_Alignments_Public {
 	 */
 	public function enqueue_styles() {
 
-		/**
-		 * This function is provided for demonstration purposes only.
-		 *
-		 * An instance of this class should be passed to the run() function
-		 * defined in Gutenberg_Custom_Alignments_Loader as all of the hooks are defined
-		 * in that particular class.
-		 *
-		 * The Gutenberg_Custom_Alignments_Loader will then create the relationship
-		 * between the defined hooks and the functions defined in this
-		 * class.
-		 */
+		wp_enqueue_style( $this->plugin_name, GUTENBERG_CUSTOM_ALIGNMENTS_BASE_URL . 'dist/public.css', array(), $this->version, 'all' );
 
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/gutenberg-custom-alignments-public.css', array(), $this->version, 'all' );
+		if ( $this->theme_json && $this->theme_json->settings->_experimentalLayout ) {
+			$theme_css  = '';
 
-	}
+			foreach ( $this->theme_json->settings->_experimentalLayout as $alignment ) {
+				$theme_css .= "
+					body .align{$alignment->slug} {
+						max-width: {$alignment->width};
+					}
+				";
+			}
 
-	/**
-	 * Register the JavaScript for the public-facing side of the site.
-	 *
-	 * @since    1.0.0
-	 */
-	public function enqueue_scripts() {
-
-		/**
-		 * This function is provided for demonstration purposes only.
-		 *
-		 * An instance of this class should be passed to the run() function
-		 * defined in Gutenberg_Custom_Alignments_Loader as all of the hooks are defined
-		 * in that particular class.
-		 *
-		 * The Gutenberg_Custom_Alignments_Loader will then create the relationship
-		 * between the defined hooks and the functions defined in this
-		 * class.
-		 */
-
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/gutenberg-custom-alignments-public.js', array( 'jquery' ), $this->version, false );
+			wp_add_inline_style( $this->plugin_name, $theme_css );
+		}
 
 	}
 
