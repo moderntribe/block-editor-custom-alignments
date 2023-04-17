@@ -103,11 +103,9 @@ class Gutenberg_Custom_Alignments_Admin {
 
 		// localize the theme.json contents as a global variable
 		if ( $this->theme_json ) {
-			$test = wp_localize_script( $this->plugin_name, 'tribe', [
+			wp_localize_script( $this->plugin_name, 'tribe', [
 				'theme_json' => $this->theme_json,
 			]);
-
-			var_dump( $test );
 		}
 
 	}
