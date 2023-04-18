@@ -46,8 +46,6 @@ define( 'BLOCK_EDITOR_CUSTOM_ALIGNMENTS_BASE_URL', trailingslashit( plugin_dir_u
 
 /**
  * Returns a JSON object for theme.json from the currently activated theme.
- *
- * @return object
  */
 function block_editor_custom_alignments_theme_json(): object {
 	if ( ! file_exists( trailingslashit( get_stylesheet_directory() ) . 'theme.json' ) ) {
