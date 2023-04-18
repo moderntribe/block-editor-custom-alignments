@@ -22,8 +22,6 @@
  * Domain Path:       /languages
  */
 
-use Tribe\Includes;
-
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
 	die;
@@ -37,36 +35,97 @@ if ( ! defined( 'WPINC' ) ) {
 define( 'BLOCK_EDITOR_CUSTOM_ALIGNMENTS_VERSION', '1.0.0' );
 
 /**
+ * Define name for the plugin for use later
+ */
+define( 'BLOCK_EDITOR_CUSTOM_ALIGNMENTS_NAME', 'block-editor-custom-alignments' );
+
+/**
  * Define base URL for the plugin for use later
  */
 define( 'BLOCK_EDITOR_CUSTOM_ALIGNMENTS_BASE_URL', trailingslashit( plugin_dir_url( __FILE__ ) ) );
 
 /**
- * The code that runs during plugin activation.
- * This action is documented in includes/class-block-editor-custom-alignments-activator.php
+ * Returns a JSON object for theme.json from the currently activated theme.
+ *
+ * @return object
  */
-function activate_block_editor_custom_alignments(): void {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-block-editor-custom-alignments-activator.php';
-	Includes\Block_Editor_Custom_Alignments_Activator::activate();
+function block_editor_custom_alignments_theme_json(): object {
+	if ( ! file_exists( trailingslashit( get_stylesheet_directory() ) . 'theme.json' ) ) {
+		return new stdClass();
+	}
+
+	return json_decode( file_get_contents( trailingslashit( get_stylesheet_directory_uri() ) . 'theme.json' ) );
 }
 
 /**
- * The code that runs during plugin deactivation.
- * This action is documented in includes/class-block-editor-custom-alignments-deactivator.php
+ * Handles admin scripts for the plugin
  */
-function deactivate_block_editor_custom_alignments(): void {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-block-editor-custom-alignments-deactivator.php';
-	Includes\Block_Editor_Custom_Alignments_Deactivator::deactivate();
+function block_editor_custom_alignments_admin_scripts(): void {
+	$theme_json = block_editor_custom_alignments_theme_json();
+
+	wp_enqueue_script( BLOCK_EDITOR_CUSTOM_ALIGNMENTS_NAME, BLOCK_EDITOR_CUSTOM_ALIGNMENTS_BASE_URL . 'dist/admin.js', [ 'jquery' ], BLOCK_EDITOR_CUSTOM_ALIGNMENTS_VERSION, false );
+
+	// localize the theme.json contents as a global variable
+	if ( $theme_json === new stdClass() ) {
+		return;
+	}
+
+	wp_localize_script( BLOCK_EDITOR_CUSTOM_ALIGNMENTS_NAME, 'tribe', [
+		'theme_json' => $theme_json,
+	]);
 }
 
-register_activation_hook( __FILE__, 'activate_block_editor_custom_alignments' );
-register_deactivation_hook( __FILE__, 'deactivate_block_editor_custom_alignments' );
+/**
+ * Handles admin styles for the plugin
+ */
+function block_editor_custom_alignments_admin_styles(): void {
+	$theme_json = block_editor_custom_alignments_theme_json();
+
+	// enqueue main styles for the admin
+	wp_enqueue_style( BLOCK_EDITOR_CUSTOM_ALIGNMENTS_NAME, BLOCK_EDITOR_CUSTOM_ALIGNMENTS_BASE_URL . 'dist/admin.css', [], BLOCK_EDITOR_CUSTOM_ALIGNMENTS_VERSION, 'all' );
+
+	// enqueue theme.json inline styles
+	if ( $theme_json === new stdClass() || ! $theme_json->settings->_experimentalLayout ) { /** @phpstan-ignore-line */
+		return;
+	}
+
+	$admin_css = '';
+
+	foreach ( $theme_json->settings->_experimentalLayout as $alignment ) {
+		$admin_css .= "
+				:is(.editor-styles-wrapper) .block-editor-block-list__layout.is-root-container .wp-block.align{$alignment->slug} {
+						max-width: {$alignment->width};
+				}
+		";
+	}
+
+	wp_add_inline_style( BLOCK_EDITOR_CUSTOM_ALIGNMENTS_NAME, $admin_css );
+}
 
 /**
- * The core plugin class that is used to define internationalization,
- * admin-specific hooks, and public-facing site hooks.
+ * Handles public styles for the plugin
  */
-require plugin_dir_path( __FILE__ ) . 'includes/class-block-editor-custom-alignments.php';
+function block_editor_custom_alignments_public_styles(): void {
+	$theme_json = block_editor_custom_alignments_theme_json();
+
+	if ( $theme_json === new stdClass() || ! $theme_json->settings->_experimentalLayout ) { /** @phpstan-ignore-line */
+		return;
+	}
+
+	wp_enqueue_style( BLOCK_EDITOR_CUSTOM_ALIGNMENTS_NAME, BLOCK_EDITOR_CUSTOM_ALIGNMENTS_BASE_URL . 'dist/public.css', [], BLOCK_EDITOR_CUSTOM_ALIGNMENTS_VERSION, 'all' );
+
+	$theme_css = '';
+
+	foreach ( $theme_json->settings->_experimentalLayout as $alignment ) {
+		$theme_css .= "
+				body .align{$alignment->slug} {
+						max-width: {$alignment->width};
+				}
+		";
+	}
+
+	wp_add_inline_style( BLOCK_EDITOR_CUSTOM_ALIGNMENTS_NAME, $theme_css );
+}
 
 /**
  * Begins execution of the plugin.
@@ -79,7 +138,9 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-block-editor-custom-alignm
  */
 function run_block_editor_custom_alignments(): void {
 
-	$plugin = new Includes\Block_Editor_Custom_Alignments();
-	$plugin->run();
+	add_action( 'admin_enqueue_scripts', 'block_editor_custom_alignments_admin_scripts', 10 );
+	add_action( 'admin_enqueue_scripts', 'block_editor_custom_alignments_admin_styles', 10 );
+	add_action( 'wp_enqueue_scripts', 'block_editor_custom_alignments_public_styles', 10 );
 }
+
 run_block_editor_custom_alignments();

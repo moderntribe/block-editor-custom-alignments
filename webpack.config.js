@@ -24,6 +24,11 @@ const assetEntryPoints = () => {
 			pkg.directories.admin,
 			'',
 			'admin.js'
+		),
+		'public': resolve(
+			pkg.directories.public,
+			'',
+			'public.js'
 		)
 	};
 };

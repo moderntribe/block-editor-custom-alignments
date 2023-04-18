@@ -19,9 +19,6 @@
 	<arg value="nps" />
 
 	<!-- Directories to be checked -->
-	<file>./admin</file>
-	<file>./public</file>
-	<file>./includes</file>
 	<file>./</file>
 
 	<!-- Exclude files -->
@@ -30,6 +27,7 @@
 	<exclude-pattern>*tests/*</exclude-pattern>
 	<exclude-pattern>*webpack/</exclude-pattern>
 	<exclude-pattern>./dist/*</exclude-pattern>
+	<exclude-pattern>./node_modules/*</exclude-pattern>
 
 	<!-- Include the Modern Tribe coding standard -->
 	<rule ref="ModernTribe" />
