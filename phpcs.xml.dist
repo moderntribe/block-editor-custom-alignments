@@ -19,7 +19,7 @@
 	<arg value="nps" />
 
 	<!-- Directories to be checked -->
-	<file>./</file>
+	<file>block-editor-custom-alignments.php</file>
 
 	<!-- Exclude files -->
 	<exclude-pattern>*-config.php</exclude-pattern>
