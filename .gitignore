@@ -1,6 +1,7 @@
 node_modules/
 dist/
 vendor/
+.phpstan-cache/
 
 # Ignore temporary OS files
 .DS_Store*
