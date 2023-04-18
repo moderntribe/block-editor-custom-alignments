@@ -4,8 +4,10 @@ parameters:
 		- public/
 		- admin/
 		- includes/
+		- ./
 	excludePaths:
 		- vendor
+		- node_modules
 	bootstrapFiles:
 		- vendor/php-stubs/wordpress-stubs/wordpress-stubs.php
 	tmpDir: .phpstan-cache/

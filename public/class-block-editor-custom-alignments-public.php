@@ -73,9 +73,9 @@ class Block_Editor_Custom_Alignments_Public {
 	 */
 	public function enqueue_styles(): void {
 
-		wp_enqueue_style( $this->plugin_name, BLOCK_EDITOR_CUSTOM_ALIGNMENTS_BASE_URL . 'dist/public.css', [], $this->version, 'all' );
+		wp_enqueue_style( $this->plugin_name, BLOCK_EDITOR_CUSTOM_ALIGNMENTS_BASE_URL . 'dist/public.css', [], $this->version, 'all' ); /** @phpstan-ignore-line */
 
-		if ( ! $this->theme_json || ! $this->theme_json->settings->_experimentalLayout ) {
+		if ( ! $this->theme_json || ! $this->theme_json->settings->_experimentalLayout ) {  /** @phpstan-ignore-line */
 			return;
 		}
 

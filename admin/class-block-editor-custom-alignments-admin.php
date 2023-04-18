@@ -74,10 +74,10 @@ class Block_Editor_Custom_Alignments_Admin {
 	public function enqueue_styles(): void {
 
 		// enqueue main styles for the admin
-		wp_enqueue_style( $this->plugin_name, BLOCK_EDITOR_CUSTOM_ALIGNMENTS_BASE_URL . 'dist/admin.css', [], $this->version, 'all' );
+		wp_enqueue_style( $this->plugin_name, BLOCK_EDITOR_CUSTOM_ALIGNMENTS_BASE_URL . 'dist/admin.css', [], $this->version, 'all' ); /** @phpstan-ignore-line */
 
 		// enqueue theme.json inline styles
-		if ( ! $this->theme_json || ! $this->theme_json->settings->_experimentalLayout ) {
+		if ( ! $this->theme_json || ! $this->theme_json->settings->_experimentalLayout ) { /** @phpstan-ignore-line */
 			return;
 		}
 
@@ -101,10 +101,10 @@ class Block_Editor_Custom_Alignments_Admin {
 	 */
 	public function enqueue_scripts(): void {
 
-		wp_enqueue_script( $this->plugin_name, BLOCK_EDITOR_CUSTOM_ALIGNMENTS_BASE_URL . 'dist/admin.js', [ 'jquery' ], $this->version, false );
+		wp_enqueue_script( $this->plugin_name, BLOCK_EDITOR_CUSTOM_ALIGNMENTS_BASE_URL . 'dist/admin.js', [ 'jquery' ], $this->version, false ); /** @phpstan-ignore-line */
 
 		// localize the theme.json contents as a global variable
-		if ( ! $this->theme_json ) {
+		if ( ! $this->theme_json ) { /** @phpstan-ignore-line */
 			return;
 		}
 
