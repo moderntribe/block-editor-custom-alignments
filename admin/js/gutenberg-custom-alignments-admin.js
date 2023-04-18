@@ -219,10 +219,28 @@
 							slug = false;
 						}
 
+						// set classes on the block depending on if a class is already set on the block
+						let updatedClass = '';
+						const currentClass = props?.attributes?.className;
+
+						if ( currentClass !== undefined && currentClass.includes(' ') ) {
+							const classArray = currentClass.split( ' ' );
+
+							classArray.forEach( ( singleClass, index ) => {
+								if ( singleClass.includes('align') ) {
+									classArray[ index ] = `align${slug}`;
+								}
+							});
+
+							updatedClass = classArray.join( ' ' );
+						} else {
+							updatedClass = `align${slug}`;
+						}
+
 						// Change the block align attribute
 						props.setAttributes( {
 							align: slug === undefined ? 'none' : slug,
-							className: 'align' + slug,
+							className: updatedClass,
 						} );
 
 						// Change the current ToolbarDropdownMenu icon if the block align has been changed
