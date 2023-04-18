@@ -1,1 +1,1 @@
-import './pcss/gutenberg-custom-alignments-public.pcss';
+import './pcss/block-editor-custom-alignments-public.pcss';

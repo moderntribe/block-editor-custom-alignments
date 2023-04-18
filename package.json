@@ -1,12 +1,12 @@
 {
-  "name": "gutenberg-custom-alignments",
+  "name": "block-editor-custom-alignments",
   "version": "1.0.0",
   "description": "Allows developers to add custom alignments to `theme.json` for use in the block editor.",
   "author": "Modern Tribe <admin@tri.be>",
   "license": "GPL-2.0-or-later",
   "keywords": [],
-  "homepage": "https://github.com/moderntribe/gutenberg-custom-alignments#readme",
-  "repository": "https://github.com/moderntribe/gutenberg-custom-alignments",
+  "homepage": "https://github.com/moderntribe/block-editor-custom-alignments#readme",
+  "repository": "https://github.com/moderntribe/block-editor-custom-alignments",
   "bugs": {
     "email": "admin@tri.be"
   },

@@ -1,6 +1,6 @@
 {
-  "name": "moderntribe/gutenberg-custom-alignments",
-  "description": "Modern Tribe Gutenberg Custom Alignments plugin.",
+  "name": "moderntribe/block-editor-custom-alignments",
+  "description": "Modern Tribe Block Editor Custom Alignments plugin.",
   "type": "wordpress-plugin",
   "license": "GPL-2.0+",
   "minimum-stability": "dev",

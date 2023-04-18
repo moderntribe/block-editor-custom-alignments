@@ -6,8 +6,8 @@
  * @link       https://tri.be
  * @since      1.0.0
  *
- * @package    Gutenberg_Custom_Alignments
- * @subpackage Gutenberg_Custom_Alignments/includes
+ * @package    Block_Editor_Custom_Alignments
+ * @subpackage Block_Editor_Custom_Alignments/includes
  */
 
 /**
@@ -16,11 +16,11 @@
  * This class defines all code necessary to run during the plugin's deactivation.
  *
  * @since      1.0.0
- * @package    Gutenberg_Custom_Alignments
- * @subpackage Gutenberg_Custom_Alignments/includes
+ * @package    Block_Editor_Custom_Alignments
+ * @subpackage Block_Editor_Custom_Alignments/includes
  * @author     Modern Tribe <info@tri.be>
  */
-class Gutenberg_Custom_Alignments_Deactivator {
+class Block_Editor_Custom_Alignments_Deactivator {
 
 	/**
 	 * Short Description. (use period)

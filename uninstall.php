@@ -22,7 +22,7 @@
  * @link       https://tri.be
  * @since      1.0.0
  *
- * @package    Gutenberg_Custom_Alignments
+ * @package    Block_Editor_Custom_Alignments
  */
 
 // If uninstall not called from WordPress, then exit.

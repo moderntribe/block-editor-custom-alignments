@@ -1,4 +1,4 @@
-# Gutenberg Custom Alignments
+# Block Editor Custom Alignments
 
 Allows developers to add custom alignments to `theme.json` for use in the block editor. 
 
@@ -25,7 +25,7 @@ The plugin runs off of an `_experimentalLayout` attribute in `theme.json` that a
 ],
 ```
 
-You are still able to define `contentSize` and `wideSize` within the `layout` attribute as normal, and they will populate in the new control created by the plugin.
+You are still able to define `contentSize` and `wideSize` within the `layout` attribute as normal, and they will populate in the new control created by the plugin. You can find the documentation for layout from core [here](https://developer.wordpress.org/themes/advanced-topics/theme-json/#layout).
 
 ```
 "layout": {
@@ -33,3 +33,6 @@ You are still able to define `contentSize` and `wideSize` within the `layout` at
   "wideSize": "883px"
 },
 ```
+## Modern Tribe
+
+[![Modern Tribe](https://moderntribe-common.s3.us-west-2.amazonaws.com/marketing/ModernTribe-Banner.png)](https://tri.be/contact/)

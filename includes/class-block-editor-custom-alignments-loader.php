@@ -6,8 +6,8 @@
  * @link       https://tri.be
  * @since      1.0.0
  *
- * @package    Gutenberg_Custom_Alignments
- * @subpackage Gutenberg_Custom_Alignments/includes
+ * @package    Block_Editor_Custom_Alignments
+ * @subpackage Block_Editor_Custom_Alignments/includes
  */
 
 /**
@@ -17,11 +17,11 @@
  * the plugin, and register them with the WordPress API. Call the
  * run function to execute the list of actions and filters.
  *
- * @package    Gutenberg_Custom_Alignments
- * @subpackage Gutenberg_Custom_Alignments/includes
+ * @package    Block_Editor_Custom_Alignments
+ * @subpackage Block_Editor_Custom_Alignments/includes
  * @author     Modern Tribe <info@tri.be>
  */
-class Gutenberg_Custom_Alignments_Loader {
+class Block_Editor_Custom_Alignments_Loader {
 
 	/**
 	 * The array of actions registered with WordPress.

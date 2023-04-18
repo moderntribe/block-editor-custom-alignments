@@ -1,2 +1,2 @@
-import './pcss/gutenberg-custom-alignments-admin.pcss';
-import './js/gutenberg-custom-alignments-admin.js';
+import './pcss/block-editor-custom-alignments-admin.pcss';
+import './js/block-editor-custom-alignments-admin.js';

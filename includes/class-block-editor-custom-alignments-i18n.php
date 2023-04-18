@@ -9,8 +9,8 @@
  * @link       https://tri.be
  * @since      1.0.0
  *
- * @package    Gutenberg_Custom_Alignments
- * @subpackage Gutenberg_Custom_Alignments/includes
+ * @package    Block_Editor_Custom_Alignments
+ * @subpackage Block_Editor_Custom_Alignments/includes
  */
 
 /**
@@ -20,11 +20,11 @@
  * so that it is ready for translation.
  *
  * @since      1.0.0
- * @package    Gutenberg_Custom_Alignments
- * @subpackage Gutenberg_Custom_Alignments/includes
+ * @package    Block_Editor_Custom_Alignments
+ * @subpackage Block_Editor_Custom_Alignments/includes
  * @author     Modern Tribe <info@tri.be>
  */
-class Gutenberg_Custom_Alignments_i18n {
+class Block_Editor_Custom_Alignments_i18n {
 
 
 	/**
@@ -35,7 +35,7 @@ class Gutenberg_Custom_Alignments_i18n {
 	public function load_plugin_textdomain() {
 
 		load_plugin_textdomain(
-			'gutenberg-custom-alignments',
+			'block-editor-custom-alignments',
 			false,
 			dirname( dirname( plugin_basename( __FILE__ ) ) ) . '/languages/'
 		);

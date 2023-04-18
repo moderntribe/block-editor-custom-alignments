@@ -1,4 +1,4 @@
-=== Plugin Name ===
+=== Block Editor Custom Alignments ===
 Contributors: geoffdmt
 Donate link: https://tri.be
 Tags: blocks, editor, alignment
@@ -16,7 +16,7 @@ The plugin runs off of an `_experimentalLayout` attribute in `theme.json` that a
 
 == Installation ==
 
-1. Upload Gutenberg Custom Alignments to the `/wp-content/plugins/` directory
+1. Upload Block Editor Custom Alignments to the `/wp-content/plugins/` directory
 1. Activate the plugin through the 'Plugins' menu in WordPress
 
 == Changelog ==

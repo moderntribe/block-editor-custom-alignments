@@ -9,8 +9,8 @@
  * @link       https://tri.be
  * @since      1.0.0
  *
- * @package    Gutenberg_Custom_Alignments
- * @subpackage Gutenberg_Custom_Alignments/includes
+ * @package    Block_Editor_Custom_Alignments
+ * @subpackage Block_Editor_Custom_Alignments/includes
  */
 
 /**
@@ -23,11 +23,11 @@
  * version of the plugin.
  *
  * @since      1.0.0
- * @package    Gutenberg_Custom_Alignments
- * @subpackage Gutenberg_Custom_Alignments/includes
+ * @package    Block_Editor_Custom_Alignments
+ * @subpackage Block_Editor_Custom_Alignments/includes
  * @author     Modern Tribe <info@tri.be>
  */
-class Gutenberg_Custom_Alignments {
+class Block_Editor_Custom_Alignments {
 
 	/**
 	 * The loader that's responsible for maintaining and registering all hooks that power
@@ -35,7 +35,7 @@ class Gutenberg_Custom_Alignments {
 	 *
 	 * @since    1.0.0
 	 * @access   protected
-	 * @var      Gutenberg_Custom_Alignments_Loader    $loader    Maintains and registers all hooks for the plugin.
+	 * @var      Block_Editor_Custom_Alignments_Loader    $loader    Maintains and registers all hooks for the plugin.
 	 */
 	protected $loader;
 
@@ -76,12 +76,12 @@ class Gutenberg_Custom_Alignments {
 	 * @since    1.0.0
 	 */
 	public function __construct() {
-		if ( defined( 'GUTENBERG_CUSTOM_ALIGNMENTS_VERSION' ) ) {
-			$this->version = GUTENBERG_CUSTOM_ALIGNMENTS_VERSION;
+		if ( defined( 'BLOCK_EDITOR_CUSTOM_ALIGNMENTS_VERSION' ) ) {
+			$this->version = BLOCK_EDITOR_CUSTOM_ALIGNMENTS_VERSION;
 		} else {
 			$this->version = '1.0.0';
 		}
-		$this->plugin_name = 'gutenberg-custom-alignments';
+		$this->plugin_name = 'block-editor-custom-alignments';
 
 		$this->theme_json = $this->get_theme_json();
 
@@ -97,10 +97,10 @@ class Gutenberg_Custom_Alignments {
 	 *
 	 * Include the following files that make up the plugin:
 	 *
-	 * - Gutenberg_Custom_Alignments_Loader. Orchestrates the hooks of the plugin.
-	 * - Gutenberg_Custom_Alignments_i18n. Defines internationalization functionality.
-	 * - Gutenberg_Custom_Alignments_Admin. Defines all hooks for the admin area.
-	 * - Gutenberg_Custom_Alignments_Public. Defines all hooks for the public side of the site.
+	 * - Block_Editor_Custom_Alignments_Loader. Orchestrates the hooks of the plugin.
+	 * - Block_Editor_Custom_Alignments_i18n. Defines internationalization functionality.
+	 * - Block_Editor_Custom_Alignments_Admin. Defines all hooks for the admin area.
+	 * - Block_Editor_Custom_Alignments_Public. Defines all hooks for the public side of the site.
 	 *
 	 * Create an instance of the loader which will be used to register the hooks
 	 * with WordPress.
@@ -114,33 +114,33 @@ class Gutenberg_Custom_Alignments {
 		 * The class responsible for orchestrating the actions and filters of the
 		 * core plugin.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-gutenberg-custom-alignments-loader.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-block-editor-custom-alignments-loader.php';
 
 		/**
 		 * The class responsible for defining internationalization functionality
 		 * of the plugin.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-gutenberg-custom-alignments-i18n.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-block-editor-custom-alignments-i18n.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the admin area.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-gutenberg-custom-alignments-admin.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-block-editor-custom-alignments-admin.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the public-facing
 		 * side of the site.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-gutenberg-custom-alignments-public.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-block-editor-custom-alignments-public.php';
 
-		$this->loader = new Gutenberg_Custom_Alignments_Loader();
+		$this->loader = new Block_Editor_Custom_Alignments_Loader();
 
 	}
 
 	/**
 	 * Define the locale for this plugin for internationalization.
 	 *
-	 * Uses the Gutenberg_Custom_Alignments_i18n class in order to set the domain and to register the hook
+	 * Uses the Block_Editor_Custom_Alignments_i18n class in order to set the domain and to register the hook
 	 * with WordPress.
 	 *
 	 * @since    1.0.0
@@ -148,7 +148,7 @@ class Gutenberg_Custom_Alignments {
 	 */
 	private function set_locale() {
 
-		$plugin_i18n = new Gutenberg_Custom_Alignments_i18n();
+		$plugin_i18n = new Block_Editor_Custom_Alignments_i18n();
 
 		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
 
@@ -163,7 +163,7 @@ class Gutenberg_Custom_Alignments {
 	 */
 	private function define_admin_hooks() {
 
-		$plugin_admin = new Gutenberg_Custom_Alignments_Admin( $this->get_plugin_name(), $this->get_version(), $this->theme_json );
+		$plugin_admin = new Block_Editor_Custom_Alignments_Admin( $this->get_plugin_name(), $this->get_version(), $this->theme_json );
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
@@ -179,7 +179,7 @@ class Gutenberg_Custom_Alignments {
 	 */
 	private function define_public_hooks() {
 
-		$plugin_public = new Gutenberg_Custom_Alignments_Public( $this->get_plugin_name(), $this->get_version(), $this->theme_json );
+		$plugin_public = new Block_Editor_Custom_Alignments_Public( $this->get_plugin_name(), $this->get_version(), $this->theme_json );
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		//$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
@@ -210,7 +210,7 @@ class Gutenberg_Custom_Alignments {
 	 * The reference to the class that orchestrates the hooks with the plugin.
 	 *
 	 * @since     1.0.0
-	 * @return    Gutenberg_Custom_Alignments_Loader    Orchestrates the hooks of the plugin.
+	 * @return    Block_Editor_Custom_Alignments_Loader    Orchestrates the hooks of the plugin.
 	 */
 	public function get_loader() {
 		return $this->loader;

@@ -7,8 +7,7 @@
  * https://developer.wordpress.org/block-editor/reference-guides/packages/packages-scripts/#default-webpack-config
  */
 
-const { resolve, extname } = require( 'path' );
-const { sync: glob } = require( 'fast-glob' );
+const { resolve } = require( 'path' );
 const pkg = require( './package.json' );
 const defaultConfig = require( '@wordpress/scripts/config/webpack.config' );
 const RemoveEmptyScriptsPlugin = require( 'webpack-remove-empty-scripts' );
@@ -25,11 +24,6 @@ const assetEntryPoints = () => {
 			pkg.directories.admin,
 			'',
 			'admin.js'
-		),
-		'public': resolve(
-			pkg.directories.public,
-			'',
-			'public.js'
 		)
 	};
 };
