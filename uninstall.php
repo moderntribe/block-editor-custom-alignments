@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /**
  * Fired when the plugin is uninstalled.
@@ -20,6 +20,7 @@
  * https://github.com/tommcfarlin/WordPress-Plugin-Boilerplate/pull/123#issuecomment-28541913
  *
  * @link       https://tri.be
+ *
  * @since      1.0.0
  *
  * @package    Block_Editor_Custom_Alignments

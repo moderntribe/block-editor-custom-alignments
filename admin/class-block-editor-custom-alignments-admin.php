@@ -1,14 +1,4 @@
-<?php
-
-/**
- * The admin-specific functionality of the plugin.
- *
- * @link       https://tri.be
- * @since      1.0.0
- *
- * @package    Block_Editor_Custom_Alignments
- * @subpackage Block_Editor_Custom_Alignments/admin
- */
+<?php declare(strict_types=1);
 
 /**
  * The admin-specific functionality of the plugin.
@@ -17,51 +7,63 @@
  * enqueue the admin-specific stylesheet and JavaScript.
  *
  * @package    Block_Editor_Custom_Alignments
+ *
  * @subpackage Block_Editor_Custom_Alignments/admin
+ *
  * @author     Modern Tribe <info@tri.be>
  */
+
+namespace Tribe\Admin;
+
 class Block_Editor_Custom_Alignments_Admin {
 
 	/**
 	 * The ID of this plugin.
 	 *
 	 * @since    1.0.0
+	 *
 	 * @access   private
+	 *
 	 * @var      string    $plugin_name    The ID of this plugin.
 	 */
-	private $plugin_name;
+	private string $plugin_name;
 
 	/**
 	 * The version of this plugin.
 	 *
 	 * @since    1.0.0
+	 *
 	 * @access   private
+	 *
 	 * @var      string    $version    The current version of this plugin.
 	 */
-	private $version;
+	private string $version;
 
 	/**
 	 * Data from theme.json of the activated theme.
 	 *
 	 * @since    1.0.0
+	 *
 	 * @access   private
+	 *
 	 * @var      object    $theme_json    Data from theme.json of the activated theme.
 	 */
-	private $theme_json;
+	private object $theme_json;
 
 	/**
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    1.0.0
-	 * @param      string    $plugin_name       The name of this plugin.
-	 * @param      string    $version    The version of this plugin.
+	 *
+	 * @param    string    $plugin_name       The name of this plugin.
+	 *
+	 * @param    string    $version    The version of this plugin.
 	 */
-	public function __construct( $plugin_name, $version, $theme_json ) {
+	public function __construct( string $plugin_name, string $version, object $theme_json ) {
 
 		$this->plugin_name = $plugin_name;
-		$this->version = $version;
-		$this->theme_json = $theme_json;
-
+		$this->version     = $version;
+		$this->theme_json  = $theme_json;
 	}
 
 	/**
@@ -69,26 +71,27 @@ class Block_Editor_Custom_Alignments_Admin {
 	 *
 	 * @since    1.0.0
 	 */
-	public function enqueue_styles() {
+	public function enqueue_styles(): void {
 
 		// enqueue main styles for the admin
-		wp_enqueue_style( $this->plugin_name, BLOCK_EDITOR_CUSTOM_ALIGNMENTS_BASE_URL . 'dist/admin.css', array(), $this->version, 'all' );
+		wp_enqueue_style( $this->plugin_name, BLOCK_EDITOR_CUSTOM_ALIGNMENTS_BASE_URL . 'dist/admin.css', [], $this->version, 'all' );
 
 		// enqueue theme.json inline styles
-		if ( $this->theme_json && $this->theme_json->settings->_experimentalLayout ) {
-			$admin_css = '';
-
-			foreach ( $this->theme_json->settings->_experimentalLayout as $alignment ) {
-				$admin_css .= "
-					:is(.editor-styles-wrapper) .block-editor-block-list__layout.is-root-container .wp-block.align{$alignment->slug} {
-						max-width: {$alignment->width};
-					}
-				";
-			}
-
-			wp_add_inline_style( $this->plugin_name, $admin_css );
+		if ( ! $this->theme_json || ! $this->theme_json->settings->_experimentalLayout ) {
+			return;
 		}
 
+		$admin_css = '';
+
+		foreach ( $this->theme_json->settings->_experimentalLayout as $alignment ) {
+			$admin_css .= "
+                :is(.editor-styles-wrapper) .block-editor-block-list__layout.is-root-container .wp-block.align{$alignment->slug} {
+                    max-width: {$alignment->width};
+                }
+            ";
+		}
+
+		wp_add_inline_style( $this->plugin_name, $admin_css );
 	}
 
 	/**
@@ -96,17 +99,18 @@ class Block_Editor_Custom_Alignments_Admin {
 	 *
 	 * @since    1.0.0
 	 */
-	public function enqueue_scripts() {
+	public function enqueue_scripts(): void {
 
-		wp_enqueue_script( $this->plugin_name, BLOCK_EDITOR_CUSTOM_ALIGNMENTS_BASE_URL . 'dist/admin.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( $this->plugin_name, BLOCK_EDITOR_CUSTOM_ALIGNMENTS_BASE_URL . 'dist/admin.js', [ 'jquery' ], $this->version, false );
 
 		// localize the theme.json contents as a global variable
-		if ( $this->theme_json ) {
-			wp_localize_script( $this->plugin_name, 'tribe', [
-				'theme_json' => $this->theme_json,
-			]);
+		if ( ! $this->theme_json ) {
+			return;
 		}
 
+		wp_localize_script( $this->plugin_name, 'tribe', [
+			'theme_json' => $this->theme_json,
+		]);
 	}
 
 }

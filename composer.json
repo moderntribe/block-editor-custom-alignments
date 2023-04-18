@@ -52,5 +52,12 @@
   "require": {
     "php": "^7.4|^8.0",
     "composer/installers": "^1.0 || ^2.0"
-  }
+  },
+  "autoload": {
+    "psr-4": {
+        "Tribe\\Admin\\": "admin",
+        "Tribe\\Public\\": "public",
+        "Tribe\\Includes\\": "includes"
+    }
+}
 }

@@ -1,5 +1,5 @@
 === Block Editor Custom Alignments ===
-Contributors: geoffdmt
+Contributors: moderntribe
 Donate link: https://tri.be
 Tags: blocks, editor, alignment
 Requires at least: 6.0

@@ -1,10 +1,12 @@
-<?php
+<?php declare(strict_types=1);
 
 /**
  * Block Editor Custom Alignments
  *
  * @link              https://tri.be
+ *
  * @since             1.0.0
+ *
  * @package           Block_Editor_Custom_Alignments
  *
  * @wordpress-plugin
@@ -19,6 +21,8 @@
  * Text Domain:       block-editor-custom-alignments
  * Domain Path:       /languages
  */
+
+use Tribe\Includes;
 
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
@@ -41,18 +45,18 @@ define( 'BLOCK_EDITOR_CUSTOM_ALIGNMENTS_BASE_URL', trailingslashit( plugin_dir_u
  * The code that runs during plugin activation.
  * This action is documented in includes/class-block-editor-custom-alignments-activator.php
  */
-function activate_block_editor_custom_alignments() {
+function activate_block_editor_custom_alignments(): void {
 	require_once plugin_dir_path( __FILE__ ) . 'includes/class-block-editor-custom-alignments-activator.php';
-	Block_Editor_Custom_Alignments_Activator::activate();
+	Includes\Block_Editor_Custom_Alignments_Activator::activate();
 }
 
 /**
  * The code that runs during plugin deactivation.
  * This action is documented in includes/class-block-editor-custom-alignments-deactivator.php
  */
-function deactivate_block_editor_custom_alignments() {
+function deactivate_block_editor_custom_alignments(): void {
 	require_once plugin_dir_path( __FILE__ ) . 'includes/class-block-editor-custom-alignments-deactivator.php';
-	Block_Editor_Custom_Alignments_Deactivator::deactivate();
+	Includes\Block_Editor_Custom_Alignments_Deactivator::deactivate();
 }
 
 register_activation_hook( __FILE__, 'activate_block_editor_custom_alignments' );
@@ -73,10 +77,9 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-block-editor-custom-alignm
  *
  * @since    1.0.0
  */
-function run_block_editor_custom_alignments() {
+function run_block_editor_custom_alignments(): void {
 
-	$plugin = new Block_Editor_Custom_Alignments();
+	$plugin = new Includes\Block_Editor_Custom_Alignments();
 	$plugin->run();
-
 }
 run_block_editor_custom_alignments();

@@ -1,17 +1,4 @@
-<?php
-
-/**
- * The file that defines the core plugin class
- *
- * A class definition that includes attributes and functions used across both the
- * public-facing side of the site and the admin area.
- *
- * @link       https://tri.be
- * @since      1.0.0
- *
- * @package    Block_Editor_Custom_Alignments
- * @subpackage Block_Editor_Custom_Alignments/includes
- */
+<?php declare(strict_types=1);
 
 /**
  * The core plugin class.
@@ -23,10 +10,19 @@
  * version of the plugin.
  *
  * @since      1.0.0
+ *
  * @package    Block_Editor_Custom_Alignments
+ *
  * @subpackage Block_Editor_Custom_Alignments/includes
+ *
  * @author     Modern Tribe <info@tri.be>
  */
+
+namespace Tribe\Includes;
+
+use Tribe\Admin;
+use Tribe\Public;
+
 class Block_Editor_Custom_Alignments {
 
 	/**
@@ -34,37 +30,45 @@ class Block_Editor_Custom_Alignments {
 	 * the plugin.
 	 *
 	 * @since    1.0.0
+	 *
 	 * @access   protected
-	 * @var      Block_Editor_Custom_Alignments_Loader    $loader    Maintains and registers all hooks for the plugin.
+	 *
+	 * @var \Tribe\Includes\Block_Editor_Custom_Alignments_Loader $loader Maintains and registers all hooks for the plugin.
 	 */
-	protected $loader;
+	protected Block_Editor_Custom_Alignments_Loader $loader;
 
 	/**
 	 * The unique identifier of this plugin.
 	 *
 	 * @since    1.0.0
+	 *
 	 * @access   protected
+	 *
 	 * @var      string    $plugin_name    The string used to uniquely identify this plugin.
 	 */
-	protected $plugin_name;
+	protected string $plugin_name;
 
 	/**
 	 * The current version of the plugin.
 	 *
 	 * @since    1.0.0
+	 *
 	 * @access   protected
+	 *
 	 * @var      string    $version    The current version of the plugin.
 	 */
-	protected $version;
+	protected string $version;
 
 	/**
 	 * Theme JSON object from the currently activated theme.
 	 *
 	 * @since    1.0.0
+	 *
 	 * @access   protected
+	 *
 	 * @var		 object   $theme_json  Theme JSON object from the currently activated theme.
 	 */
-	protected $theme_json;
+	protected object $theme_json;
 
 	/**
 	 * Define the core functionality of the plugin.
@@ -89,7 +93,62 @@ class Block_Editor_Custom_Alignments {
 		$this->set_locale();
 		$this->define_admin_hooks();
 		$this->define_public_hooks();
+	}
 
+	/**
+	 * Run the loader to execute all of the hooks with WordPress.
+	 *
+	 * @since    1.0.0
+	 */
+	public function run(): void {
+		$this->loader->run();
+	}
+
+	/**
+	 * The name of the plugin used to uniquely identify it within the context of
+	 * WordPress and to define internationalization functionality.
+	 *
+	 * @since     1.0.0
+	 *
+	 * @return    string    The name of the plugin.
+	 */
+	public function get_plugin_name(): string {
+		return $this->plugin_name;
+	}
+
+	/**
+	 * The reference to the class that orchestrates the hooks with the plugin.
+	 *
+	 * @since     1.0.0
+	 *
+	 * @return \Tribe\Includes\Block_Editor_Custom_Alignments_Loader Orchestrates the hooks of the plugin.
+	 */
+	public function get_loader(): Block_Editor_Custom_Alignments_Loader {
+		return $this->loader;
+	}
+
+	/**
+	 * Retrieve the version number of the plugin.
+	 *
+	 * @since     1.0.0
+	 *
+	 * @return    string    The version number of the plugin.
+	 */
+	public function get_version(): string {
+		return $this->version;
+	}
+
+	/**
+	 * Returns a JSON object for theme.json from the currently activated theme.
+	 *
+	 * @return   bool|object  false if file doesn't exist / json object if it does
+	 */
+	public function get_theme_json() {
+		if ( ! file_exists( trailingslashit( get_stylesheet_directory() ) . 'theme.json' ) ) {
+			return false;
+		}
+
+		return json_decode( file_get_contents( trailingslashit( get_stylesheet_directory_uri() ) . 'theme.json' ) );
 	}
 
 	/**
@@ -106,9 +165,10 @@ class Block_Editor_Custom_Alignments {
 	 * with WordPress.
 	 *
 	 * @since    1.0.0
+	 *
 	 * @access   private
 	 */
-	private function load_dependencies() {
+	private function load_dependencies(): void {
 
 		/**
 		 * The class responsible for orchestrating the actions and filters of the
@@ -134,24 +194,23 @@ class Block_Editor_Custom_Alignments {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-block-editor-custom-alignments-public.php';
 
 		$this->loader = new Block_Editor_Custom_Alignments_Loader();
-
 	}
 
 	/**
 	 * Define the locale for this plugin for internationalization.
 	 *
-	 * Uses the Block_Editor_Custom_Alignments_i18n class in order to set the domain and to register the hook
+	 * Uses the Block_Editor_Custom_Alignments_I18n class in order to set the domain and to register the hook
 	 * with WordPress.
 	 *
 	 * @since    1.0.0
+	 *
 	 * @access   private
 	 */
-	private function set_locale() {
+	private function set_locale(): void {
 
-		$plugin_i18n = new Block_Editor_Custom_Alignments_i18n();
+		$plugin_i18n = new Block_Editor_Custom_Alignments_I18n();
 
 		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
-
 	}
 
 	/**
@@ -159,15 +218,15 @@ class Block_Editor_Custom_Alignments {
 	 * of the plugin.
 	 *
 	 * @since    1.0.0
+	 *
 	 * @access   private
 	 */
-	private function define_admin_hooks() {
+	private function define_admin_hooks(): void {
 
-		$plugin_admin = new Block_Editor_Custom_Alignments_Admin( $this->get_plugin_name(), $this->get_version(), $this->theme_json );
+		$plugin_admin = new Admin\Block_Editor_Custom_Alignments_Admin( $this->get_plugin_name(), $this->get_version(), $this->theme_json );
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
-
 	}
 
 	/**
@@ -175,68 +234,14 @@ class Block_Editor_Custom_Alignments {
 	 * of the plugin.
 	 *
 	 * @since    1.0.0
+	 *
 	 * @access   private
 	 */
-	private function define_public_hooks() {
+	private function define_public_hooks(): void {
 
-		$plugin_public = new Block_Editor_Custom_Alignments_Public( $this->get_plugin_name(), $this->get_version(), $this->theme_json );
+		$plugin_public = new Public\Block_Editor_Custom_Alignments_Public( $this->get_plugin_name(), $this->get_version(), $this->theme_json );
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
-		//$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
-
-	}
-
-	/**
-	 * Run the loader to execute all of the hooks with WordPress.
-	 *
-	 * @since    1.0.0
-	 */
-	public function run() {
-		$this->loader->run();
-	}
-
-	/**
-	 * The name of the plugin used to uniquely identify it within the context of
-	 * WordPress and to define internationalization functionality.
-	 *
-	 * @since     1.0.0
-	 * @return    string    The name of the plugin.
-	 */
-	public function get_plugin_name() {
-		return $this->plugin_name;
-	}
-
-	/**
-	 * The reference to the class that orchestrates the hooks with the plugin.
-	 *
-	 * @since     1.0.0
-	 * @return    Block_Editor_Custom_Alignments_Loader    Orchestrates the hooks of the plugin.
-	 */
-	public function get_loader() {
-		return $this->loader;
-	}
-
-	/**
-	 * Retrieve the version number of the plugin.
-	 *
-	 * @since     1.0.0
-	 * @return    string    The version number of the plugin.
-	 */
-	public function get_version() {
-		return $this->version;
-	}
-
-	/**
-	 * Returns a JSON object for theme.json from the currently activated theme.
-	 *
-	 * @return   bool|object  false if file doesn't exist / json object if it does
-	 */
-	public function get_theme_json() {
-		if ( ! file_exists( trailingslashit( get_stylesheet_directory() ) . 'theme.json' ) ) {
-			return false;
-		}
-
-		return json_decode( file_get_contents( trailingslashit( get_stylesheet_directory_uri() ) . 'theme.json' ) );
 	}
 
 }
