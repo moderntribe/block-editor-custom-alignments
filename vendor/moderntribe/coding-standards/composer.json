@@ -1,0 +1,45 @@
+{
+    "name": "moderntribe/coding-standards",
+    "description": "The Modern Tribe Coding Standard for PHPCS",
+    "type": "phpcodesniffer-standard",
+    "keywords": [
+      "phpcs",
+      "coding",
+      "standard",
+      "static analysis",
+      "moderntribe",
+      "code",
+      "style",
+      "sniffer",
+      "rules",
+      "sniffs",
+      "checks"
+    ],
+    "license": "MIT",
+    "require": {
+        "php": ">=8.0",
+        "automattic/vipwpcs": "*",
+        "dealerdirect/phpcodesniffer-composer-installer": "^0.7.1 | ^1.0",
+        "cweagans/composer-patches": "^1.7",
+        "phpcompatibility/phpcompatibility-wp": "^2.1",
+        "slevomat/coding-standard": "^8.0",
+        "squizlabs/php_codesniffer": "^3.6"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "config": {
+      "sort-packages": true,
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true,
+            "cweagans/composer-patches": true
+        }
+    },
+    "extra": {
+      "enable-patching": true,
+      "patches": {
+        "wp-coding-standards/wpcs": {
+          "Add PHP 8 support until WordPress releases a new version": "https://github.com/WordPress/WordPress-Coding-Standards/commit/7cd46bed1e6a7a2af3fe24c7f4a044da3076d8f4.patch"
+        }
+      }
+    }
+}

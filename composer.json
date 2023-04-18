@@ -3,13 +3,54 @@
   "description": "Modern Tribe Block Editor Custom Alignments plugin.",
   "type": "wordpress-plugin",
   "license": "GPL-2.0+",
-  "minimum-stability": "dev",
-  "require": {
-      "composer/installers": "^1.0 || ^2.0"
-  },
   "config": {
+      "sort-packages": true,
+      "preferred-install": "dist",
       "allow-plugins": {
-          "composer/installers": true
-      }
+      "composer/installers": true,
+      "dealerdirect/phpcodesniffer-composer-installer": true,
+      "cweagans/composer-patches": true,
+      "phpstan/extension-installer": true
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "scripts": {
+    "phpcbf": "./vendor/bin/phpcbf -s",
+    "phpcs": "./vendor/bin/phpcs",
+    "phpstan": "./vendor/bin/phpstan analyse --memory-limit=-1"
+  },
+  "scripts-descriptions": {
+    "phpcs": "Run PHPCS on the project.",
+    "phpcbf": "Run PHPCBF on the project.",
+    "phpstan": "Run PHPStan on the project."
+  },
+  "repositories": [
+    {
+        "type": "composer",
+        "url": "https://wpackagist.org"
+    },
+    {
+        "type": "vcs",
+        "url": "https://github.com/moderntribe/tribe-glomar.git"
+    }
+  ],
+  "require-dev": {
+    "codeception/module-asserts": "^1.0",
+    "codeception/module-cli": "^1.0",
+    "codeception/module-db": "^1.0",
+    "codeception/module-filesystem": "^1.0",
+    "codeception/module-phpbrowser": "^1.0",
+    "codeception/module-webdriver": "^1.0",
+    "codeception/util-universalframework": "^1.0",
+    "moderntribe/coding-standards": "^3.2",
+    "php-stubs/wordpress-tests-stubs": "6.1.1",
+    "phpstan/extension-installer": "^1.1",
+    "phpstan/phpstan": "^1.10",
+    "szepeviktor/phpstan-wordpress": "^1.1.7"
+  },
+  "require": {
+    "php": "^7.4|^8.0",
+    "composer/installers": "^1.0 || ^2.0"
   }
 }
