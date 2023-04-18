@@ -19,9 +19,3 @@ pre-commit:
     phpcs-plugin-main:
       glob: "./*.php"
       <<: *phpcs
-
-# prefix with jira ticket
-prepare-commit-msg:
-  scripts:
-    "prefix-with-jira-ticket.php":
-      runner: php
