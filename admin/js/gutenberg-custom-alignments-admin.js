@@ -178,6 +178,7 @@
 			* Build the toolbar block alignment controls depening on the align support of the block type
 			*/
 
+			let currentIcon = 'none';
 			const allowedAlignControls = [];
 
 			for ( const alignment of combinedAlignments ) {
@@ -188,6 +189,11 @@
 					width,
 					textdomain
 				} = alignment;
+
+				// check if this alignment is the currently selected alignment for the block and grab the icon for the active one
+				if ( props?.attributes?.className !== undefined && props.attributes.className.includes(`align${slug}`) ) {
+					currentIcon = blockAlignIcon( icon );
+				}
 
 				// only add the current align control if it's supported. We should always include "none".
 				if ( ( defaultWPAlignments.find( alignment => alignment.slug === slug ) || defaultWPJustifcations.find( alignment => alignment.slug === slug ) ) && ! blockAlignSupport.includes( slug ) && slug !== 'none' ) {
@@ -231,15 +237,9 @@
 				allowedAlignControls.push( newControl );
 			}
 
-			// Get the current ToolbarDropdownMenu icon, depending on the selected align
-			let currentAlign = 'none';
-			if ( props?.attributes?.className !== undefined && props.attributes.className.includes('align') ) {
-				currentAlign = props.attributes.className.replace( 'align', '' );
-			}
-
-			let currentIcon = combinedAlignments.find( alignment => alignment.slug === 'none' );
-			if ( currentAlign !== '' ) {
-				currentIcon = combinedAlignments.find( alignment => alignment.slug === currentAlign );
+			// if we didn't get a match for an icon, we'll just show the "none" option
+			if ( currentIcon === 'none' ) {
+				currentIcon = combinedAlignments.find( alignment => alignment.slug === 'none' );
 				currentIcon = blockAlignIcon( currentIcon.icon );
 			}
 
