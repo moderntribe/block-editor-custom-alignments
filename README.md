@@ -40,7 +40,7 @@ The plugin also offers support for only include specific blocks from having cust
 
 ```
 "_experimentalLayoutInclude": [
-	"core/group",
+  "core/group",
   "core/columns"
 ],
 ```
@@ -51,9 +51,21 @@ The plugin also offers support for excluding specific blocks from having custom 
 
 ```
 "_experimentalLayoutExclude": [
-  "core/group"
+  "core/group",
+  "core/columns"
 ],
 ```
+
+### Sorting Flag
+
+The plugin offers a way to turn on a sorting feature. If the `_experimentalLayoutSorting` attribute is added to `theme.json` and set to `true`, the plugin will sort the final alignment controls array by the widths provided. With controls that do not have a defined width, appearing at the bottom of the list. 
+
+```
+"_experimentalLayoutSorting": true,
+```
+
+- Sorting Enabled: http://p.tri.be/i/ddH3a6
+- Sorting Disabled: http://p.tri.be/i/zzYW0W
 
 ## Local Development
 

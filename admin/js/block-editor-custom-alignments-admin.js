@@ -41,7 +41,7 @@
 			name: 'Full width',
 			slug: 'full',
 			icon: 'M5 4v11h14V4H5zm3 15.8h8v-1.5H8v1.5z',
-			width: '100%',
+			width: false,
 			textdomain: 'tribe',
 		},
 	];
@@ -73,15 +73,21 @@
 
 	// add array of global blocks to exclude from getting custom support
 	const excludeBlocksFromCustomAlignmentSupport =
-		themeJSON.settings._experimentalLayoutExclude !== undefined
+		themeJSON?.settings?._experimentalLayoutExclude !== undefined
 			? themeJSON.settings._experimentalLayoutExclude
 			: [];
 
 	// add array of global blocks to include for custom support
 	const includeBlocksForCustomAlignmentSupport =
-		themeJSON.settings._experimentalLayoutInclude !== undefined
+		themeJSON?.settings?._experimentalLayoutInclude !== undefined
 			? themeJSON.settings._experimentalLayoutInclude
 			: [];
+
+	// add flag for sorting the final alignment array by width
+	const customAlignmentSupportSorting =
+		themeJSON?.settings?._experimentalLayoutSorting !== undefined
+			? themeJSON.settings._experimentalLayoutSorting
+			: false;
 
 	/**
 	 * @function modifyBlockAlignmentSupport
@@ -164,6 +170,45 @@
 	};
 
 	/**
+	 * @function handleAlignmentSort
+	 *
+	 * @description handles sorting the final alignment array to be ordered by width
+	 *
+	 * @param {*} a
+	 * @param {*} b
+	 *
+	 * @return {*} what to do with the sorting
+	 */
+	const handleAlignmentSort = ( a, b ) => {
+		// check the first width
+		// if there's no string there isn't a value attached so move to the bottom of the list via an arbitrary large number
+		const aWidth =
+			typeof a.width === 'string'
+				? parseInt( a.width.replace( 'px', '' ).replace( '%', '' ) )
+				: 100000;
+
+		// check the second width
+		// if there's no string there isn't a value attached so move to the bottom of the list via an arbitrary large number
+		const bWidth =
+			typeof b.width === 'string'
+				? parseInt( b.width.replace( 'px', '' ).replace( '%', '' ) )
+				: 100000;
+
+		// if the first width is smaller than the second, move it up in the list
+		if ( aWidth < bWidth ) {
+			return -1;
+		}
+
+		// if the first width is larger than the second, move it down in the list
+		if ( aWidth > bWidth ) {
+			return 1;
+		}
+
+		// if widths are the same, do nothing
+		return 0;
+	};
+
+	/**
 	 * @function customBlockAlignmentControls
 	 *
 	 * @description filter to add custom block alignment toolbar controls
@@ -211,6 +256,11 @@
 					...themeJSON.settings._experimentalLayout,
 					...defaultWPJustifcations,
 				];
+
+				// check for sorting flag
+				if ( customAlignmentSupportSorting ) {
+					combinedAlignments.sort( handleAlignmentSort );
+				}
 
 				/*
 				 * Build the toolbar block alignment controls depening on the align support of the block type
