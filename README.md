@@ -71,10 +71,10 @@ The plugin also offers scripts for linting and formatting:
 - `npm run lint` will run formatting and linting on all PCSS & JS files.
 - `npm run format` will run `wp-scripts format` on all PCSS & JS files.
 - Linting is also available per language via their own respective commands:
-    - `npm run lint:css` will return linting errors in your PCSS files.
-	- `npm run lint:css:fix` will fix linting errors in your PCSS files.
-	- `npm run lint:js` will return linting errors in your JS files.
-	- `npm run lint:js:fix` will fix linting errors in your JS files.
+  - `npm run lint:css` will return linting errors in your PCSS files.
+  - `npm run lint:css:fix` will fix linting errors in your PCSS files.
+  - `npm run lint:js` will return linting errors in your JS files.
+  - `npm run lint:js:fix` will fix linting errors in your JS files.
 
 ## Modern Tribe
 
