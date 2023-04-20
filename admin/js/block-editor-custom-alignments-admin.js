@@ -210,7 +210,7 @@
 							defaultWPJustifcations.find(
 								( anAlignment ) => anAlignment.slug === slug
 							) ) &&
-						typeof blockAlignSupport === Array &&
+						blockAlignSupport instanceof Array &&
 						! blockAlignSupport.includes( slug ) &&
 						slug !== 'none'
 					) {
