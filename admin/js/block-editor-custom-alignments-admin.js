@@ -72,8 +72,16 @@
 	];
 
 	// add array of global blocks to exclude from getting custom support
-	// TODO: maybe add this to theme.json as well?
-	const excludeBlocksFromCustomAlignmentSupport = [];
+	const excludeBlocksFromCustomAlignmentSupport =
+		themeJSON.settings._experimentalLayoutExclude !== undefined
+			? themeJSON.settings._experimentalLayoutExclude
+			: [];
+
+	// add array of global blocks to include for custom support
+	const includeBlocksForCustomAlignmentSupport =
+		themeJSON.settings._experimentalLayoutInclude !== undefined
+			? themeJSON.settings._experimentalLayoutInclude
+			: [];
 
 	/**
 	 * @function modifyBlockAlignmentSupport
@@ -88,6 +96,14 @@
 	const modifyBlockAlignmentSupport = ( settings, name ) => {
 		// disable specific blocks from having custom alignment support
 		if ( excludeBlocksFromCustomAlignmentSupport.includes( name ) ) {
+			return settings;
+		}
+
+		// only allow specific blocks for custom alignment support if `_experimentalLayoutInclude` is set
+		if (
+			includeBlocksForCustomAlignmentSupport.length > 0 &&
+			! includeBlocksForCustomAlignmentSupport.includes( name )
+		) {
 			return settings;
 		}
 
@@ -161,6 +177,16 @@
 				// disable specific blocks from having custom alignment support
 				if (
 					excludeBlocksFromCustomAlignmentSupport.includes(
+						blockName
+					)
+				) {
+					return originalEdit;
+				}
+
+				// only allow specific blocks for custom alignment support if `_experimentalLayoutInclude` is set
+				if (
+					includeBlocksForCustomAlignmentSupport.length > 0 &&
+					! includeBlocksForCustomAlignmentSupport.includes(
 						blockName
 					)
 				) {

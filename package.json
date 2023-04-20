@@ -38,7 +38,7 @@
   "scripts": {
     "dist": "wp-scripts build",
     "dev": "wp-scripts start",
-    "format": "wp-scripts format ./public",
+    "format": "wp-scripts format \"./@(admin|public)/**/*.js\"",
     "lint": "npm run format && npm run lint:js:fix && npm run lint:css:fix",
     "lint:css": "wp-scripts lint-style \"./@(admin|public)/**/*.pcss\"",
     "lint:css:fix": "wp-scripts lint-style \"./@(admin|public)/**/*.pcss\" --fix",
