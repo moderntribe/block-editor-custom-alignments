@@ -122,14 +122,20 @@ class Block_Editor_Custom_Alignments {
 	}
 
 	/**
-	 * If it exists, grabs the
+	 * If it exists, grabs the data from theme.json
 	 */
 	private function block_editor_custom_alignments_theme_json(): object {
 		if ( ! file_exists( trailingslashit( get_stylesheet_directory() ) . 'theme.json' ) ) {
 			return new \stdClass();
 		}
 
-		return json_decode( file_get_contents( trailingslashit( get_stylesheet_directory_uri() ) . 'theme.json' ) );
+		$theme_json_contents = file_get_contents( trailingslashit( get_stylesheet_directory_uri() ) . 'theme.json' );
+
+		if ( ! $theme_json_contents ) {
+			return new \stdClass();
+		}
+
+		return json_decode( $theme_json_contents );
 	}
 
 }
