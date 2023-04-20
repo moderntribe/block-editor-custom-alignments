@@ -114,11 +114,13 @@
 		return newSettings;
 	};
 
-	wp.hooks.addFilter(
-		'blocks.registerBlockType',
-		'tribe/modify-block-align-support',
-		modifyBlockAlignmentSupport
-	);
+	if ( themeJSON?.settings?._experimentalLayout !== undefined ) {
+		wp.hooks.addFilter(
+			'blocks.registerBlockType',
+			'tribe/modify-block-align-support',
+			modifyBlockAlignmentSupport
+		);
+	}
 
 	/*
 	 * Function to handle the block alignment icons
@@ -210,6 +212,7 @@
 							defaultWPJustifcations.find(
 								( anAlignment ) => anAlignment.slug === slug
 							) ) &&
+						blockAlignSupport instanceof Array &&
 						! blockAlignSupport.includes( slug ) &&
 						slug !== 'none'
 					) {
@@ -336,9 +339,11 @@
 		'withInspectorControls'
 	);
 
-	wp.hooks.addFilter(
-		'editor.BlockEdit',
-		'tribe/with-inspector-controls',
-		customBlockAlignmentControls
-	);
+	if ( themeJSON?.settings?._experimentalLayout !== undefined ) {
+		wp.hooks.addFilter(
+			'editor.BlockEdit',
+			'tribe/with-inspector-controls',
+			customBlockAlignmentControls
+		);
+	}
 } )();
