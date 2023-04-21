@@ -18,9 +18,13 @@ jobs:
     secrets:
       COMPOSER_ENV: ${{ secrets.COMPOSER_ENV }}
 
+  linting:
+    name: 'Linting'
+    uses: ./.github/workflows/linting.yml
+
   phpstan:
     name: 'Static Analysis'
-    needs: [coding-standards]
+    needs: [coding-standards, linting]
     uses: ./.github/workflows/static-analysis.yml
     secrets:
       COMPOSER_ENV: ${{ secrets.COMPOSER_ENV }}
