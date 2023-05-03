@@ -129,13 +129,13 @@ class Block_Editor_Custom_Alignments {
 			return new \stdClass();
 		}
 
-		$theme_json_contents = file_get_contents( trailingslashit( get_stylesheet_directory_uri() ) . 'theme.json' );
+		$theme_json = file_get_contents( trailingslashit( get_stylesheet_directory_uri() ) . 'theme.json' );
 
-		if ( ! $theme_json_contents ) {
+		if ( $theme_json === false ) {
 			return new \stdClass();
 		}
 
-		return json_decode( $theme_json_contents );
+		return json_decode( $theme_json );
 	}
 
 }

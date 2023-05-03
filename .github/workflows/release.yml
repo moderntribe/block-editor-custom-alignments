@@ -1,0 +1,51 @@
+name: 'Release'
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    env:
+      BUILD_FOLDER: build
+      PLUGIN_SLUG: block-editor-custom-alignments
+
+    steps:
+      - name: Setup PHP with composer and extensions.
+        uses: shivammathur/setup-php@2.22.0
+        with:
+          tools: composer, wp
+          php-version: 8.0
+
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+        with:
+          path: ${{ env.BUILD_FOLDER }}
+          ref: ${{ github.ref }}
+
+      - name: Initialize Composer
+        run: |
+          cd ${{ env.BUILD_FOLDER }}
+          composer dump-autoload
+      - name: NPM Build
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: '.nvmrc'
+
+        run: npm ci
+        run: npm run dist
+      - name: Configure WP-CLI dist-archive-command
+        run: |
+          wp package install wp-cli/dist-archive-command
+      - name: Build Plugin Zip
+        run: |
+          wp dist-archive ${{ env.BUILD_FOLDER }} --plugin-dirname=${{ env.PLUGIN_SLUG }}
+      - name: Save to Release
+        uses: xresloader/upload-to-github-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          file: "*.zip"
+          tags: true
