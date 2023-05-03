@@ -10,7 +10,7 @@ jobs:
 
     env:
       BUILD_FOLDER: build
-      PLUGIN_SLUG: [plugin-name]
+      PLUGIN_SLUG: block-editor-custom-alignments
 
     steps:
       - name: Setup PHP with composer and extensions.
