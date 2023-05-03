@@ -34,8 +34,9 @@ jobs:
         with:
           node-version-file: '.nvmrc'
 
-        run: npm ci
-        run: npm run dist
+        run: |
+          npm ci
+          npm run dist
       - name: Configure WP-CLI dist-archive-command
         run: |
           wp package install wp-cli/dist-archive-command
