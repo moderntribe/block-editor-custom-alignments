@@ -29,11 +29,11 @@ jobs:
         run: |
           cd ${{ env.BUILD_FOLDER }}
           composer dump-autoload
-      - name: NPM Build
+      - name: NPM Install
         uses: actions/setup-node@v3
         with:
           node-version-file: '.nvmrc'
-
+      - name: NPM Build
         run: |
           npm ci
           npm run dist
