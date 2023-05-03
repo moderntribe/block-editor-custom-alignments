@@ -36,12 +36,15 @@ jobs:
           cache: 'npm'
       - name: NPM Install
         run: |
+          cd ${{ env.BUILD_FOLDER }}
           npm ci
       - name: NPM Build
         run: |
+          cd ${{ env.BUILD_FOLDER }}
           npm run dist
       - name: Configure WP-CLI dist-archive-command
         run: |
+          cd ${{ env.BUILD_FOLDER }}
           wp package install wp-cli/dist-archive-command
       - name: Build Plugin Zip
         run: |
