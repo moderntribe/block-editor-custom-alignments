@@ -34,6 +34,7 @@ jobs:
         with:
           node-version: '16.13.1'
           cache: 'npm'
+          cache-dependency-path: ${{ env.BUILD_FOLDER }}/package-lock.json
       - name: NPM Install
         run: |
           cd ${{ env.BUILD_FOLDER }}
