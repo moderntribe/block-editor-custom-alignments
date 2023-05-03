@@ -29,13 +29,16 @@ jobs:
         run: |
           cd ${{ env.BUILD_FOLDER }}
           composer dump-autoload
-      - name: NPM Install
+      - name: NPM Setup
         uses: actions/setup-node@v3
         with:
           node-version: '16.13.1'
-      - name: NPM Build
+          cache: 'npm'
+      - name: NPM Install
         run: |
           npm ci
+      - name: NPM Build
+        run: |
           npm run dist
       - name: Configure WP-CLI dist-archive-command
         run: |
