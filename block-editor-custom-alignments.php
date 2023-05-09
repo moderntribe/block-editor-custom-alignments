@@ -81,7 +81,7 @@ class Block_Editor_Custom_Alignments {
 		wp_enqueue_style( $this->name, $this->base_url . 'dist/admin.css', [], $this->version, 'all' );
 
 		// enqueue theme.json inline styles
-		if ( $this->theme_json === new \stdClass() || ! $this->theme_json->settings->_experimentalLayout ) { /** @phpstan-ignore-line */
+		if ( $this->theme_json === new \stdClass() || empty( $this->theme_json->settings->_experimentalLayout ) ) { /** @phpstan-ignore-line */
 			return;
 		}
 
@@ -102,7 +102,7 @@ class Block_Editor_Custom_Alignments {
 	 * Handles public styles for the plugin
 	 */
 	public function block_editor_custom_alignments_public_styles(): void {
-		if ( $this->theme_json === new \stdClass() || ! $this->theme_json->settings->_experimentalLayout ) { /** @phpstan-ignore-line */
+		if ( $this->theme_json === new \stdClass() || empty( $this->theme_json->settings->_experimentalLayout ) ) { /** @phpstan-ignore-line */
 			return;
 		}
 
