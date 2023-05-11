@@ -13,7 +13,7 @@
  * Plugin Name:       Block Editor Custom Alignments
  * Plugin URI:        https://https://github.com/moderntribe/block-editor-custom-alignments
  * Description:       Allows developers to add custom alignments to `theme.json` for use in the block editor.
- * Version:           1.0.0
+ * Version:           1.0.2
  * Author:            Modern Tribe
  * Author URI:        https://tri.be
  * License:           GPL-2.0+
@@ -47,7 +47,7 @@ class Block_Editor_Custom_Alignments {
 	 * constructs class / adds actions related to plugin
 	 */
 	public function __construct() {
-		$this->version    = '1.0.0';
+		$this->version    = '1.0.2';
 		$this->name       = 'block-editor-custom-alignments';
 		$this->base_url   = trailingslashit( plugin_dir_url( __FILE__ ) );
 		$this->theme_json = $this->block_editor_custom_alignments_theme_json();
@@ -81,7 +81,7 @@ class Block_Editor_Custom_Alignments {
 		wp_enqueue_style( $this->name, $this->base_url . 'dist/admin.css', [], $this->version, 'all' );
 
 		// enqueue theme.json inline styles
-		if ( $this->theme_json === new \stdClass() || empty( $this->theme_json->settings->_experimentalLayout ) ) { /** @phpstan-ignore-line */
+		if ( $this->theme_json === new \stdClass() || ! $this->theme_json->settings->_experimentalLayout ) { /** @phpstan-ignore-line */
 			return;
 		}
 
@@ -102,7 +102,7 @@ class Block_Editor_Custom_Alignments {
 	 * Handles public styles for the plugin
 	 */
 	public function block_editor_custom_alignments_public_styles(): void {
-		if ( $this->theme_json === new \stdClass() || empty( $this->theme_json->settings->_experimentalLayout ) ) { /** @phpstan-ignore-line */
+		if ( $this->theme_json === new \stdClass() || ! $this->theme_json->settings->_experimentalLayout ) { /** @phpstan-ignore-line */
 			return;
 		}
 
