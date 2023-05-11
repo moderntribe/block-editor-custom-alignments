@@ -13,7 +13,7 @@
  * Plugin Name:       Block Editor Custom Alignments
  * Plugin URI:        https://https://github.com/moderntribe/block-editor-custom-alignments
  * Description:       Allows developers to add custom alignments to `theme.json` for use in the block editor.
- * Version:           1.0.2
+ * Version:           1.0.3
  * Author:            Modern Tribe
  * Author URI:        https://tri.be
  * License:           GPL-2.0+
@@ -44,13 +44,27 @@ class Block_Editor_Custom_Alignments {
 	private object $theme_json;
 
 	/**
+	 * @var array<String>
+	 */
+	private array $dependencies;
+
+	/**
 	 * constructs class / adds actions related to plugin
 	 */
 	public function __construct() {
-		$this->version    = '1.0.2';
-		$this->name       = 'block-editor-custom-alignments';
-		$this->base_url   = trailingslashit( plugin_dir_url( __FILE__ ) );
-		$this->theme_json = $this->block_editor_custom_alignments_theme_json();
+		global $pagenow;
+
+		$this->version      = '1.0.3';
+		$this->name         = 'block-editor-custom-alignments';
+		$this->base_url     = trailingslashit( plugin_dir_url( __FILE__ ) );
+		$this->theme_json   = $this->block_editor_custom_alignments_theme_json();
+		$this->dependencies = [ 'wp-blocks', 'wp-dom-ready' ];
+
+		if ( 'site-editor.php' === $pagenow ) {
+			$this->dependencies[] = 'wp-edit-site';
+		} else {
+			$this->dependencies[] = 'wp-edit-post';
+		}
 
 		add_action( 'admin_enqueue_scripts', [ $this, 'block_editor_custom_alignments_admin_scripts' ], 10 );
 		add_action( 'admin_enqueue_scripts', [ $this, 'block_editor_custom_alignments_admin_styles' ], 10 );
@@ -61,7 +75,7 @@ class Block_Editor_Custom_Alignments {
 	 * Handles admin scripts for the plugin
 	 */
 	public function block_editor_custom_alignments_admin_scripts(): void {
-		wp_enqueue_script( $this->name, $this->base_url . 'dist/admin.js', [ 'jquery' ], $this->version, false );
+		wp_enqueue_script( $this->name, $this->base_url . 'dist/admin.js', $this->dependencies, $this->version, false );
 
 		// localize the theme.json contents as a global variable
 		if ( $this->theme_json === new \stdClass() ) {
