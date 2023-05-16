@@ -4,7 +4,7 @@ Donate link: https://tri.be
 Tags: blocks, editor, alignment
 Requires at least: 6.0
 Tested up to: 6.2
-Stable tag: 1.0.2
+Stable tag: 1.0.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -20,6 +20,9 @@ The plugin runs off of an `_experimentalLayout` attribute in `theme.json` that a
 1. Activate the plugin through the 'Plugins' menu in WordPress
 
 == Changelog ==
+
+= 1.0.3 =
+* Fix how the admin scripts get enqueued (dependencies)
 
 = 1.0.2 =
 * Update versions to match release.
