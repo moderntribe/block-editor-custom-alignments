@@ -143,9 +143,15 @@ class Block_Editor_Custom_Alignments {
 			return new \stdClass();
 		}
 
-		$theme_json = file_get_contents( trailingslashit( get_stylesheet_directory_uri() ) . 'theme.json' );
+		$response = wp_remote_get( trailingslashit( get_stylesheet_directory_uri() ) . 'theme.json' );
 
-		if ( $theme_json === false ) {
+		if ( is_wp_error( $response ) ) {
+			return new \stdClass();
+		}
+
+		$theme_json = wp_remote_retrieve_body( $response );
+
+		if ( $theme_json === '' ) {
 			return new \stdClass();
 		}
 
