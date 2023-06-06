@@ -20,23 +20,15 @@ const RemoveEmptyScriptsPlugin = require( 'webpack-remove-empty-scripts' );
  */
 const assetEntryPoints = () => {
 	return {
-		'admin': resolve(
-			pkg.directories.admin,
-			'',
-			'admin.js'
-		),
-		'public': resolve(
-			pkg.directories.public,
-			'',
-			'public.js'
-		)
+		admin: resolve( pkg.directories.admin, '', 'admin.js' ),
+		public: resolve( pkg.directories.public, '', 'public.js' ),
 	};
 };
 
 module.exports = {
 	...defaultConfig,
 	entry: {
-		...assetEntryPoints()
+		...assetEntryPoints(),
 	},
 	output: {
 		...defaultConfig.output,
