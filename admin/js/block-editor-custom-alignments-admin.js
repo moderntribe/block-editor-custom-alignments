@@ -342,7 +342,8 @@
 
 							if (
 								currentClass !== undefined &&
-								currentClass.includes( ' ' )
+								currentClass.includes( ' ' ) &&
+								slug !== false
 							) {
 								const classArray = currentClass.split( ' ' );
 
@@ -353,13 +354,18 @@
 								} );
 
 								updatedClass = classArray.join( ' ' );
-							} else {
+							} else if ( slug !== false ) {
 								updatedClass = `align${ slug }`;
+							} else {
+								updatedClass = '';
 							}
 
 							// Change the block align attribute
 							props.setAttributes( {
-								align: slug === undefined ? 'none' : slug,
+								align:
+									slug === undefined || slug === false
+										? 'none'
+										: slug,
 								className: updatedClass,
 							} );
 
