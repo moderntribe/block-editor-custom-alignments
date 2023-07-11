@@ -270,7 +270,7 @@
 				const allowedAlignControls = [];
 
 				for ( const alignment of combinedAlignments ) {
-					let { name, slug, icon, width, textdomain } = alignment;
+					const { name, slug, icon, width, textdomain } = alignment;
 
 					// check if this alignment is the currently selected alignment for the block and grab the icon for the active one
 					if (
@@ -331,9 +331,13 @@
 						title: controlTitle,
 						icon: blockAlignIcon( icon ),
 						onClick: () => {
-							if ( slug === 'none' ) {
-								// Because we don't want a "alignnone" classname in our block
-								slug = false;
+							// Change the current ToolbarDropdownMenu icon if the block align has been changed
+							const alignToolbarButton = document.querySelector(
+								'[aria-label="Align"]'
+							);
+
+							if ( alignToolbarButton ) {
+								alignToolbarButton.innerHTML = `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="${ icon }"/></svg>`;
 							}
 
 							// set classes on the block depending on if a class is already set on the block
@@ -342,8 +346,10 @@
 
 							if (
 								currentClass !== undefined &&
-								currentClass.includes( ' ' )
+								currentClass.includes( ' ' ) &&
+								currentClass.includes( 'align' )
 							) {
+								// if we have multiple classes set on the element
 								const classArray = currentClass.split( ' ' );
 
 								classArray.forEach( ( singleClass, index ) => {
@@ -353,24 +359,42 @@
 								} );
 
 								updatedClass = classArray.join( ' ' );
-							} else {
+							} else if (
+								currentClass !== undefined &&
+								currentClass !== '' &&
+								currentClass.includes( 'align' )
+							) {
+								// if we only have one class set on the element and the class is "align..."
 								updatedClass = `align${ slug }`;
+							} else if (
+								currentClass !== undefined &&
+								currentClass !== '' &&
+								! currentClass.includes( 'align' )
+							) {
+								// if we only have one class set on the element and the class isn't "align..."
+								updatedClass = currentClass + ` align${ slug }`;
+							} else if (
+								currentClass === undefined ||
+								currentClass === ''
+							) {
+								// if we have no classes set on the element
+								updatedClass = `align${ slug }`;
+							} else {
+								updatedClass = '';
+							}
+
+							// if our updated class includes alignnone, remove it
+							if ( updatedClass.includes( 'alignnone' ) ) {
+								updatedClass = updatedClass
+									.replace( 'alignnone', '' )
+									.trim();
 							}
 
 							// Change the block align attribute
 							props.setAttributes( {
-								align: slug === undefined ? 'none' : slug,
+								align: slug,
 								className: updatedClass,
 							} );
-
-							// Change the current ToolbarDropdownMenu icon if the block align has been changed
-							const alignToolbarButton = document.querySelector(
-								'[aria-label="Align"]'
-							);
-
-							if ( alignToolbarButton ) {
-								alignToolbarButton.innerHTML = `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="${ icon }"/></svg>`;
-							}
 						},
 					};
 
