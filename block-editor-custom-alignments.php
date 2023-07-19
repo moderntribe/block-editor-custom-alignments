@@ -155,7 +155,13 @@ class Block_Editor_Custom_Alignments {
 			return new \stdClass();
 		}
 
-		return json_decode( $theme_json );
+		$json_theme_json = json_decode( $theme_json );
+
+		if ( ! $json_theme_json ) {
+			return new \stdClass();
+		}
+
+		return $json_theme_json;
 	}
 
 }
