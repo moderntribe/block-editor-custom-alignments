@@ -13,7 +13,7 @@
  * Plugin Name:       Block Editor Custom Alignments
  * Plugin URI:        https://https://github.com/moderntribe/block-editor-custom-alignments
  * Description:       Allows developers to add custom alignments to `theme.json` for use in the block editor.
- * Version:           1.0.6
+ * Version:           1.0.7
  * Author:            Modern Tribe
  * Author URI:        https://tri.be
  * License:           GPL-2.0+
@@ -54,7 +54,7 @@ class Block_Editor_Custom_Alignments {
 	public function __construct() {
 		global $pagenow;
 
-		$this->version      = '1.0.6';
+		$this->version      = '1.0.7';
 		$this->name         = 'block-editor-custom-alignments';
 		$this->base_url     = trailingslashit( plugin_dir_url( __FILE__ ) );
 		$this->theme_json   = $this->block_editor_custom_alignments_theme_json();
@@ -103,6 +103,9 @@ class Block_Editor_Custom_Alignments {
 
 		foreach ( $this->theme_json->settings->_experimentalLayout as $alignment ) {
 			$admin_css .= "
+					:is(.editor-styles-wrapper) {
+						--tribe--style--global--{$alignment->slug}-size: {$alignment->width};
+					}
 					:is(.editor-styles-wrapper) .block-editor-block-list__layout.is-root-container .wp-block.align{$alignment->slug} {
 							max-width: {$alignment->width};
 					}
@@ -126,6 +129,9 @@ class Block_Editor_Custom_Alignments {
 
 		foreach ( $this->theme_json->settings->_experimentalLayout as $alignment ) {
 			$theme_css .= "
+					body {
+						--tribe--style--global--{$alignment->slug}-size: {$alignment->width};
+					}
 					body .align{$alignment->slug} {
 							max-width: {$alignment->width};
 					}
