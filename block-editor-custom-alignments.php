@@ -154,7 +154,7 @@ class Block_Editor_Custom_Alignments {
 		if ( $json_theme_content !== false ) {
 			$json_theme_json = $this->get_json_theme_json( $json_theme_content );
 
-			if ( isset( $this->theme_json->settings->_experimentalLayout ) ) {
+			if ( isset( $this->theme_json->settings ) ) {
 				return  $json_theme_json;
 			}
 		}
