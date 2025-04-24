@@ -149,6 +149,16 @@ class Block_Editor_Custom_Alignments {
 			return new \stdClass();
 		}
 
+		$json_theme_content = file_get_contents( trailingslashit( get_stylesheet_directory() )  . 'theme.json' );
+
+		if ( $json_theme_content !== false ) {
+			$json_theme_json = $this->get_json_theme_json( $json_theme_content );
+
+			if ( isset( $this->theme_json->settings ) ) {
+				return  $json_theme_json;
+			}
+		}
+
 		$response = wp_remote_get( trailingslashit( get_stylesheet_directory_uri() ) . 'theme.json' );
 
 		if ( is_wp_error( $response ) ) {
@@ -157,6 +167,10 @@ class Block_Editor_Custom_Alignments {
 
 		$theme_json = wp_remote_retrieve_body( $response );
 
+		return $this->get_json_theme_json( $theme_json );
+	}
+
+	private function get_json_theme_json( string $theme_json = '' ): object {
 		if ( $theme_json === '' ) {
 			return new \stdClass();
 		}
