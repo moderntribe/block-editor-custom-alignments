@@ -1,6 +1,6 @@
 {
   "name": "block-editor-custom-alignments",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Allows developers to add custom alignments to `theme.json` for use in the block editor.",
   "author": "Modern Tribe <admin@tri.be>",
   "license": "GPL-2.0-or-later",
