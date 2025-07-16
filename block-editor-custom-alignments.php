@@ -13,7 +13,7 @@
  * Plugin Name:       Block Editor Custom Alignments
  * Plugin URI:        https://https://github.com/moderntribe/block-editor-custom-alignments
  * Description:       Allows developers to add custom alignments to `theme.json` for use in the block editor.
- * Version:           1.1.0
+ * Version:           1.1.1
  * Author:            Modern Tribe
  * Author URI:        https://tri.be
  * License:           GPL-2.0+
@@ -54,7 +54,7 @@ class Block_Editor_Custom_Alignments {
 	public function __construct() {
 		global $pagenow;
 
-		$this->version      = '1.1.0';
+		$this->version      = '1.1.1';
 		$this->name         = 'block-editor-custom-alignments';
 		$this->base_url     = trailingslashit( plugin_dir_url( __FILE__ ) );
 		$this->theme_json   = $this->block_editor_custom_alignments_theme_json();
@@ -154,8 +154,8 @@ class Block_Editor_Custom_Alignments {
 		if ( $json_theme_content !== false ) {
 			$json_theme_json = $this->get_json_theme_json( $json_theme_content );
 
-			if ( isset( $this->theme_json->settings ) ) {
-				return  $json_theme_json;
+			if ( isset( $json_theme_json->settings ) ) {
+				return $json_theme_json;
 			}
 		}
 
