@@ -13,7 +13,7 @@
  * Plugin Name:       Block Editor Custom Alignments
  * Plugin URI:        https://https://github.com/moderntribe/block-editor-custom-alignments
  * Description:       Allows developers to add custom alignments to `theme.json` for use in the block editor.
- * Version:           1.1.1
+ * Version:           1.1.2
  * Author:            Modern Tribe
  * Author URI:        https://tri.be
  * License:           GPL-2.0+
@@ -54,7 +54,7 @@ class Block_Editor_Custom_Alignments {
 	public function __construct() {
 		global $pagenow;
 
-		$this->version      = '1.1.1';
+		$this->version      = '1.1.2';
 		$this->name         = 'block-editor-custom-alignments';
 		$this->base_url     = trailingslashit( plugin_dir_url( __FILE__ ) );
 		$this->theme_json   = $this->block_editor_custom_alignments_theme_json();
@@ -66,8 +66,8 @@ class Block_Editor_Custom_Alignments {
 			$this->dependencies[] = 'wp-edit-post';
 		}
 
-		add_action( 'enqueue_block_editor_assets', [ $this, 'block_editor_custom_alignments_admin_scripts' ], 10 );
-		add_action( 'enqueue_block_editor_assets', [ $this, 'block_editor_custom_alignments_admin_styles' ], 10 );
+		add_action( 'enqueue_block_assets', [ $this, 'block_editor_custom_alignments_admin_scripts' ], 10 );
+		add_action( 'enqueue_block_assets', [ $this, 'block_editor_custom_alignments_admin_styles' ], 10 );
 		add_action( 'wp_enqueue_scripts', [ $this, 'block_editor_custom_alignments_public_styles' ], 10 );
 	}
 
@@ -75,6 +75,10 @@ class Block_Editor_Custom_Alignments {
 	 * Handles admin scripts for the plugin
 	 */
 	public function block_editor_custom_alignments_admin_scripts(): void {
+		if ( ! is_admin() ) {
+			return;
+		}
+
 		wp_enqueue_script( $this->name, $this->base_url . 'dist/admin.js', $this->dependencies, $this->version, false );
 
 		// localize the theme.json contents as a global variable
@@ -91,6 +95,10 @@ class Block_Editor_Custom_Alignments {
 	 * Handles admin styles for the plugin
 	 */
 	public function block_editor_custom_alignments_admin_styles(): void {
+		if ( ! is_admin() ) {
+			return;
+		}
+
 		// enqueue main styles for the admin
 		wp_enqueue_style( $this->name, $this->base_url . 'dist/admin.css', [], $this->version, 'all' );
 
