@@ -3,7 +3,7 @@ Contributors: moderntribe
 Donate link: https://tri.be
 Tags: blocks, editor, alignment
 Requires at least: 6.0
-Tested up to: 6.5.2
+Tested up to: 6.9.4
 Stable tag: 1.1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -20,6 +20,9 @@ The plugin runs off of an `_experimentalLayout` attribute in `theme.json` that a
 1. Activate the plugin through the 'Plugins' menu in WordPress
 
 == Changelog ==
+
+= 1.1.2 =
+* Update to fix console warnings for incorrect asset enqueuing.
 
 = 1.0.8 =
 * Updates to bring the plugin into the WP 6.6 modern age.
